@@ -1,12 +1,15 @@
 package com.tw.apistackbase.repository;
 
 import com.tw.apistackbase.Model.Employee;
+import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
+@Component
 public class EmployeeRepository {
     Map<String, Employee> employees = new HashMap<>();
 
@@ -18,6 +21,10 @@ public class EmployeeRepository {
 
     public List<Employee> findAll() {
         return new ArrayList<>(employees.values());
+    }
+
+    public List<Employee> findAll(int age) {
+        return  new ArrayList<>(employees.values()).stream().filter(employee -> employee.getAge() < age).collect(Collectors.toList());
     }
 
     public void add(Employee employee) {
@@ -33,4 +40,6 @@ public class EmployeeRepository {
     public Employee findById(String id) {
         return employees.get(id);
     }
+    
 }
+
